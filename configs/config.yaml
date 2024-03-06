@@ -1,0 +1,21 @@
+server:
+  http:
+    addr: ${HTTP_ADDR:0.0.0.0:8000}
+    timeout: 1s
+  grpc:
+    addr: ${GRPC_ADDR:0.0.0.0:9000}
+    timeout: 1s
+data:
+  database:
+    driver: ${DB_DRIVER}
+    source: ${DB_SOURCE}
+  redis:
+    addr: ${REDIS_ADDR:127.0.0.1:6379}
+    pass: ${REDIS_PASS:}
+    ssl: ${REDIS_SSL:false}
+    db: ${REDIS_DB:0}
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+  config:
+    nats_host: ${NATS_HOST:localhost:4222}
+    nats_topic: ${NATS_TOPIC:user_voucher}

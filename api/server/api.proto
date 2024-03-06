@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+option go_package = "crypto-price-realtime-service/api/server;server";
+option java_multiple_files = true;
+
+// The greeting service definition.
+service CAKEService {
+  // Sends a greeting
+  rpc Register (RegisterNewAccountRequest) returns (RegisterNewAccountResponse) {
+    option (google.api.http) = {
+      post: "/api/user/v1/register"
+      body: "*"
+    };
+  }
+
+  rpc Login (LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/api/user/v1/login"
+      body: "*"
+    };
+  }
+
+  // Internal api
+  rpc CreateVoucher (CreateVoucherRequest) returns (CreateVoucherResponse) {
+    option (google.api.http) = {
+      post: "/api/voucher/v1/create"
+      body: "*"
+    };
+  }
+
+  rpc CreateCampaign (CreateCampaignRequest) returns (CreateCampaignResponse) {
+    option (google.api.http) = {
+      post: "/api/campaign/v1/create"
+      body: "*"
+    };
+  }
+}
+
+// The request message containing the user's name.
+// Generate a token with user info
+
+// Publish api
+// Register
+message RegisterNewAccountRequest {
+  string full_name = 1;
+  string account = 2; // account user for login
+  string email = 3;
+  string phone_number = 4;
+  string user_name = 5;
+  string password = 6;
+  int64 birthday = 7;
+}
+
+message RegisterNewAccountResponse {
+  message Data {
+    string token = 1;
+  }
+
+  int32 status = 1;
+  string message = 2;
+  Data data = 3;
+  string msg_key = 4;
+}
+
+// Login
+message LoginRequest {
+  string user_name = 1;
+  string password  = 2;
+}
+
+message LoginResponse {
+  message Data {
+    string token = 1;
+  }
+
+  int32 status = 1;
+  string message = 2;
+  Data data = 3;
+  string msg_key = 4; // for error handle
+}
+
+// Get list voucher of user
+// user empty api request
+message GetUserVoucherRequest {
+  // via token
+  string user_id = 1;
+}
+
+message GetUserVoucherResponse {
+
+}
+
+// Pay A Card
+message BuyCardRequest {
+//  string user_id = 1;
+}
+
+message BuyCardResponse {
+
+}
+
+// Internal api to create voucher / update voucher / get list voucher
+message CreateVoucherRequest {
+  string name = 1;
+  string type = 2;
+  float value = 3; // discount percent
+}
+
+message CreateVoucherResponse {
+  int64 status = 1;
+  string message = 2;
+  string msg_key = 3;
+}
+
+// Create Campaign
+message CreateCampaignRequest {
+  message Data {
+    int32 voucher_id = 1;
+  }
+
+  string name = 1;
+  int64 start_day = 2;
+  int64 end_day = 3;
+  int64 total_slot = 4;
+  repeated Data vouchers = 5;
+}
+
+message CreateCampaignResponse {
+  message Data {
+    int64 id = 1;
+  }
+
+  int32 status = 1;
+  string message = 2;
+  Data data = 3;
+  string msg_key = 4;
+}

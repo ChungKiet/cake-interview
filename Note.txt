@@ -1,0 +1,12 @@
+The steps to run source:
+
+- Step 1: Install nats in docker
+- Step 2: Install postgres
+- Step 3: Run command: go mod tidy
+- Step 4: Run command: go mod vendor
+- Step 5: Run code: kratos run
+- Step 6: run file stress test, query database to check result
+(Number of concurrent user was config in stress test function)
+
+Improve:
+- Unique index constraint for user.account
